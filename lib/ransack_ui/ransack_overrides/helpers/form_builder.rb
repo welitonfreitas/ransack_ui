@@ -76,7 +76,7 @@ module Ransack
                   klass_name = foreign_klass_for_attribute(attribute)
 
                   if klass_name
-                    klass = klass_name.constantize
+                    klass = klass_name.to_s.constantize
 
                     value_object = klass.find_by_id(value.value)
                     if value_object
@@ -227,7 +227,7 @@ module Ransack
           if column == 'id'
             foreign_klass = object.context.traverse(base).model_name
             # Check that model can autocomplete. If not, skip this id column.
-            next nil unless foreign_klass.constantize._ransack_can_autocomplete
+            next nil unless foreign_klass.to_s.constantize._ransack_can_autocomplete
             attribute_label = I18n.translate(foreign_klass, :default => foreign_klass)
           else
             foreign_klass = foreign_keys[column.to_sym]
